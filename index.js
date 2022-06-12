@@ -108,21 +108,18 @@ app.post(
 app.put(
   `/api/persons/:id`,
   (request, response, next) => {
-    const person = request.body.name.length > 2 && request.body.number.length > 7 ?
-      {
-        name: request.body.name,
-        number: request.body.number,
-      } :
-      undefined
-    Person.findByIdAndUpdate(request.params.id, person, { new: true })
+    Person.findByIdAndUpdate(request.params.id, { name: request.body.name, number: request.body.number }, { runValidators: true, new: true })
       .then(
         updatePerson => {
           response.json(updatePerson)
         }
       )
       .catch(
-        error =>
+        error => {
+          assert.equal(error.errors.name.message, `El nombre debe contener como minimo tres caracteres`)
+          assert.equal(error.errors.number.message, `El numero debe contener como minimo ocho digitos`)
           next(error)
+        }
       )
   }
 )
