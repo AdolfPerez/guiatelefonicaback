@@ -116,8 +116,6 @@ app.put(
       )
       .catch(
         error => {
-          assert.equal(error.errors.name.message, `El nombre debe contener como minimo tres caracteres`)
-          assert.equal(error.errors.number.message, `El numero debe contener como minimo ocho digitos`)
           next(error)
         }
       )
