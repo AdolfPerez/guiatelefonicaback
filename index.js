@@ -1,11 +1,11 @@
 require('dotenv').config()
-const express = require(`express`)
+const express = require('express')
 const app = express()
-const { request } = require("express")
-const { response } = require("express")
+//const { request } = require("express")
+//const { response } = require("express")
 const cors = require('cors')
 const morgan = require('morgan')
-const Person = require(`./models/person`)
+const Person = require('./models/person')
 
 app.use(express.static('build'))
 app.use(express.json())
@@ -25,7 +25,7 @@ app.use(
 app.use(cors())
 
 app.get(
-  `/api/persons`,
+  '/api/persons',
   (request, response, next) =>
     Person.find({})
       .then(
@@ -41,7 +41,7 @@ app.get(
 )
 
 app.get(
-  `/api/persons/:id`,
+  '/api/persons/:id',
   ({ params }, response, next) =>
     Person.findById(params.id)
       .then(
@@ -57,7 +57,7 @@ app.get(
 )
 
 app.get(
-  `/info`,
+  '/info',
   (request, response) =>
     Person.find({})
       .then(
@@ -74,11 +74,11 @@ app.get(
 )
 
 app.delete(
-  `/api/persons/:id`,
+  '/api/persons/:id',
   ({ params }, response, next) =>
     Person.findByIdAndRemove(params.id)
       .then(
-        result =>
+        /*result*/ () =>
           response.status(204).end()
       )
       .catch(
@@ -88,7 +88,7 @@ app.delete(
 )
 
 app.post(
-  `/api/persons`,
+  '/api/persons',
   ({ body }, response, next) => {
     const person = new Person({
       name: body.name,
@@ -106,7 +106,7 @@ app.post(
   }
 )
 app.put(
-  `/api/persons/:id`,
+  '/api/persons/:id',
   (request, response, next) => {
     Person.findByIdAndUpdate(request.params.id, { name: request.body.name, number: request.body.number }, { runValidators: true, new: true })
       .then(

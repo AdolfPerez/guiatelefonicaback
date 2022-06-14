@@ -14,7 +14,7 @@ const person = new Person({ name: process.argv[3], number: process.argv[4] })
 process.argv.length < 4 ?
 
   (
-    console.log(`phonebook:`),
+    console.log('phonebook:'),
     Person.find({}).then(result => {
       result.forEach(person => {
         console.log(person.name, person.number)
@@ -23,7 +23,7 @@ process.argv.length < 4 ?
     })
   ) :
 
-  person.save().then(result => {
+  person.save().then(/*result*/ () => {
     console.log(`added ${process.argv[3]} number ${process.argv[4]} to phonebook`)
     mongoose.connection.close()
   })
